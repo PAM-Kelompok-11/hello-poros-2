@@ -40,11 +40,12 @@ jobs:
 
   deploy:
     runs-on: self-hosted
+    needs: buildandpush
     steps:
       - name: Deployment compose
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker run -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker pull ghcr.io/pam-kelompok-11/hello-poros-2:latest
+          docker run -d ghcr.io/pam-kelompok-11/hello-poros-2:latest
 
 
 
