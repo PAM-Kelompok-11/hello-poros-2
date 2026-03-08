@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -14,21 +15,20 @@ jobs:
       contents: read
       packages: write
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Login ke GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Ekstrak metadata (tags, labels)
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Login ke GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Ekstrak metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
     - name: Build dan Push image
       uses: docker/build-push-action@v5
       with:
